@@ -14,6 +14,44 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   gtag('js', new Date());
 
   gtag('config', 'AW-18126206934');
+
+  // Rastreamento de conversão do Google Ads nos cliques de WhatsApp
+  document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("click", function(event) {
+      const link = event.target.closest("a");
+      if (link && (link.href.includes("wa.me") || link.href.includes("api.whatsapp.com"))) {
+        const url = link.href;
+        const target = link.target;
+        
+        // IMPORTANTE: Altere 'SEU_CONVERSION_LABEL' para o label real gerado no seu painel do Google Ads
+        const conversionId = 'AW-18126206934';
+        const conversionLabel = 'SEU_CONVERSION_LABEL'; 
+        const sendTo = `${conversionId}/${conversionLabel}`;
+
+        if (typeof gtag === "function") {
+          if (target !== "_blank") {
+            event.preventDefault();
+            let navigated = false;
+            const callback = function() {
+              if (!navigated) {
+                navigated = true;
+                window.location.href = url;
+              }
+            };
+            setTimeout(callback, 1000);
+            gtag("event", "conversion", {
+              "send_to": sendTo,
+              "event_callback": callback
+            });
+          } else {
+            gtag("event", "conversion", {
+              "send_to": sendTo
+            });
+          }
+        }
+      }
+    });
+  });
 </script>
 </head><body class="home wp-singular page-template page-template-elementor_header_footer page page-id-11 wp-embed-responsive wp-theme-hello-elementor hello-elementor-default elementor-default elementor-template-full-width elementor-kit-7 elementor-page elementor-page-11"><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5J6KH7QS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div data-elementor-type="wp-post" data-elementor-id="26" class="elementor elementor-26"><div class="elementor-element elementor-element-b99949e e-flex e-con-boxed wpr-particle-no wpr-jarallax-no wpr-parallax-no wpr-sticky-section-no wpr-equal-height-no e-con e-parent" data-id="b99949e" data-element_type="container" data-e-type="container" data-settings="{" background_background":"classic"}"=""><div class="e-con-inner"><div class="elementor-element elementor-element-3f74116 elementor-widget elementor-widget-button" data-id="3f74116" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">

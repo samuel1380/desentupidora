@@ -1,0 +1,9 @@
+services:
+  - type: static
+    name: intech-desentupidora
+    buildCommand: ""
+    staticPublishPath: "."
+    headers:
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://ssl.google-analytics.com https://*.google.com https://*.google.com.br https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://tagmanager.google.com https://unpkg.com; img-src 'self' data: https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.g.doubleclick.net https://*.google.com https://*.google.com.br https://*.whatsapp.com https://*.whatsapp.net; connect-src 'self' https://www.googletagmanager.com https://*.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://*.google.com https://*.google.com.br https://*.whatsapp.com wss://*.whatsapp.com; font-src 'self' data: https://fonts.gstatic.com; frame-src 'self' https://www.googletagmanager.com https://*.googletagmanager.com https://*.google.com https://*.google.com.br https://td.doubleclick.net;"

@@ -263,30 +263,33 @@ Asa Norte, Brasília</p></div></div></div></div></div></div><div class="elemento
 </style>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const summaries = document.querySelectorAll(".e-n-accordion-item summary");
-    summaries.forEach(summary => {
-      summary.addEventListener("click", function(e) {
-        e.preventDefault();
-        const details = this.closest("details");
-        const isOpen = details.hasAttribute("open");
-        
-        document.querySelectorAll(".e-n-accordion-item").forEach(d => {
-          if (d !== details) {
-             d.removeAttribute("open");
-             let sum = d.querySelector("summary");
-             if (sum) sum.setAttribute("aria-expanded", "false");
-          }
-        });
-        
-        if (isOpen) {
-          details.removeAttribute("open");
-          this.setAttribute("aria-expanded", "false");
+    const accordion = document.querySelector(".e-n-accordion");
+    if (!accordion) return;
+
+    accordion.addEventListener("click", function(event) {
+      const summary = event.target.closest(".e-n-accordion-item > summary");
+      if (!summary || !accordion.contains(summary)) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+
+      const details = summary.closest(".e-n-accordion-item");
+      const shouldOpen = !details.hasAttribute("open");
+
+      accordion.querySelectorAll(".e-n-accordion-item").forEach(item => {
+        const itemSummary = item.querySelector("summary");
+        if (item === details && shouldOpen) {
+          item.setAttribute("open", "");
+          itemSummary?.setAttribute("aria-expanded", "true");
+          itemSummary?.setAttribute("tabindex", "0");
         } else {
-          details.setAttribute("open", "");
-          this.setAttribute("aria-expanded", "true");
+          item.removeAttribute("open");
+          itemSummary?.setAttribute("aria-expanded", "false");
+          itemSummary?.setAttribute("tabindex", item === details ? "0" : "-1");
         }
       });
-    });
+    }, true);
   });
 </script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
